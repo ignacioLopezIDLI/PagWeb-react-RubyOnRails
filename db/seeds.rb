@@ -40,5 +40,12 @@ reviews = Review.create([
         description:"Sin herramientas",
         score: 1,
         lenguaje: lenguajes.first
+    },
+    {
+    title: "Facil de usar",
+    description: "Excelentes y Practicas herramientas",
+    score: 5,
+    lenguaje: lenguajes.second
     }
+
 ])

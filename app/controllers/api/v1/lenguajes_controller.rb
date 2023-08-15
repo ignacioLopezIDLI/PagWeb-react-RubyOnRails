@@ -1,18 +1,20 @@
 module Api
     module V1
         class LenguajesController < ApplicationController
+            protect_from_forgery with: :null_session
+            # INDEX Obtiene Todos los Lenguajes -> Serializer Convierte a Json
             def index
                 lenguajes = Lenguaje.all
 
                 render json: LenguajeSerializer.new(lenguajes, options).serialized_json
         end
-
+            # SHOW Obtiene x slug
         def show
             lenguaje = Lenguaje.find_by(slug: params[:slug])
 
             render json: LenguajeSerializer.new(lenguaje, options).serialized_json
         end
-
+            # CREATE Crea un nuevo Lenguaje usando name  y image_url
         def create
              lenguaje = Lenguaje.new(lenguaje_params)
 
@@ -22,7 +24,7 @@ module Api
             render json: {error: lenguaje.error.messages }, status:422
           end
         end
-
+            # UPDATE Busca lenguaje x slug -> Actualiza name y img_url
         def update
             lenguaje = Lenguaje.find_by(slug: params[:slug])
 
@@ -32,16 +34,17 @@ module Api
            render json: {error: lenguaje.error.messages }, status:422
          end
        end
-
-       def destroy
-        lenguaje = Lenguaje.find_by(slug: params[:slug])
-
-        if lenguaje.destroy(lenguaje_params)
-            head :no_content
-        else
-        render json: {error: lenguaje.error.messages }, status:422
-        end
-    end
+            # DESTROY Busca lenguaje x slug -> operacion exitosa "No content"
+            def destroy
+                lenguaje = Lenguaje.find_by(slug: params[:slug])
+              
+                if lenguaje.destroy
+                  render json: { message: "Lenguaje eliminado exitosamente" }, status: 200
+                else
+                  render json: { error: lenguaje.errors.full_messages }, status: 422
+                end
+              end
+              
 
         private
 

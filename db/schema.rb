@@ -23,12 +23,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_14_115014) do
   end
 
   create_table "reviews", force: :cascade do |t|
-    t.string "tittle"
     t.string "description"
     t.integer "score"
     t.bigint "lenguaje_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "title", comment: "Nombre del titulo"
     t.index ["lenguaje_id"], name: "index_reviews_on_lenguaje_id"
   end
 
